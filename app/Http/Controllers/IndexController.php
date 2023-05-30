@@ -16,8 +16,10 @@ class IndexController extends Controller
     public function encrypt (Request $request) {
         $request->validate([
             'plainTextEncrypt' => 'required',
-            'initVectorEncrypt' => 'required',
+            'initVectorEncrypt' => 'required|size:16',
             'encryptionKey' => 'required',
+        ], [
+            'initVectorEncrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
 
         $stringToEncrypt = $request->input('plainTextEncrypt');
@@ -47,8 +49,10 @@ class IndexController extends Controller
     public function decrypt (Request $request) {
         $request->validate([
             'cipherTextDecrypt' => 'required',
-            'initVectorDecrypt' => 'required',
+            'initVectorDecrypt' => 'required|size:16',
             'encryptionKeyDecrypt' => 'required',
+        ], [
+            'initVectorDecrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
 
         $stringToDecrypt = $request->input('cipherTextDecrypt');

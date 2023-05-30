@@ -17,8 +17,10 @@ class ImageController extends Controller
     public function encryption(Request $request) {
         $request->validate([
             'fileUploadOriginal' => 'required|image|mimes:jpeg,png|max:2048',
-            'initVectorEncrypt' => 'required',
+            'initVectorEncrypt' => 'required|size:16',
             'encryptionKey' => 'required',
+        ], [
+            'initVectorEncrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
     
         $image = $request->file('fileUploadOriginal');
@@ -55,8 +57,10 @@ class ImageController extends Controller
     public function decryption(Request $request) {
         $request->validate([
             'fileUploadDecrypt' => 'required',
-            'initVectorDecrypt' => 'required',
+            'initVectorDecrypt' => 'required|size:16',
             'encryptionKeyDecrypt' => 'required',
+        ], [
+            'initVectorDecrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
     
         $image = $request->file('fileUploadDecrypt');
