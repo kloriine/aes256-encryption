@@ -9,6 +9,37 @@
   <title>5200411441</title>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
+
+  @if ($errors->any())
+    <div id="notificationBackground" class="fixed inset-0 bg-gray-900 opacity-50"></div>
+    <div id="notification" class="fixed inset-0 flex items-center justify-center z-50">
+      <div class="w-64 bg-white rounded shadow">
+        <div class="flex justify-between items-center px-4 py-2 border-b">
+          <h2 class="text-lg font-semibold text-indigo-600">Notifications</h2>
+          <button id="notificationCloseButton" type="button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        @foreach ($errors->all() as $error)
+        <div class="p-4">
+          {{ $error }}
+        </div>
+        @endforeach
+      </div>
+    </div>
+    <script>
+      $(document).ready(function() {
+        $("#notificationCloseButton").click(function() {
+          $("#notification").addClass("hidden");
+          $("#notificationBackground").addClass("hidden");
+        });
+      });
+    </script>
+  @endif
+
   <main class="flex-grow">
     <div class="container mx-auto w-3/5">
       <h1 class="text-5xl pt-20 font-bold text-indigo-600">AES-256-CBC</h1>
@@ -120,6 +151,7 @@
       </div>
     </div>
   </main>
+
   <footer class="bg-gray-900 py-4">
     <div class="container mx-auto w-3/5">
       <div class="flex items-center justify-between">
@@ -133,5 +165,6 @@
       </div>
     </div>
   </footer>
+
 </body>
 </html>
