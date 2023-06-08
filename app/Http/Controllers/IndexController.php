@@ -32,7 +32,7 @@ class IndexController extends Controller
         $encryptedString = openssl_encrypt($stringToEncrypt, $method, $encryptionKey, $options, $iv);
 
         $encryption = new Encryption();
-        $encryption->plaintext = $stringToEncrypt;
+        $encryption->plaintext = hash('sha256', $stringToEncrypt);
         $encryption->initialization_vector = Hash::make($iv);
         $encryption->encryption_key = Hash::make($encryptionKey);
         $encryption->ciphertext = $encryptedString;
@@ -68,7 +68,7 @@ class IndexController extends Controller
         $decryption->ciphertext = $stringToDecrypt;
         $decryption->initialization_vector = Hash::make($iv);
         $decryption->encryption_key = Hash::make($encryptionKey);
-        $decryption->plaintext = $decryptedString;
+        $decryption->plaintext = hash('sha256', $decryptedString); 
         $decryption->save();
 
         return redirect()->back()->with([
