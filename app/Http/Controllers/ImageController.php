@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+use App\Models\ImageDecryption;
+use App\Models\ImageEncryption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 
 class ImageController extends Controller
@@ -33,15 +33,15 @@ class ImageController extends Controller
     
         $encryptedData = openssl_encrypt($imageData, $encryptionMethod, $encryptionKey, $options, $encryptionIV);
         
-        $originalName = $image->getClientOriginalName();
         $extension = $image->getClientOriginalExtension();
+        $uploadedName = 'original_image_' . now()->format('Ymd_His') . '.' . $extension;
         $processedName = 'encrypted_image_' . now()->format('Ymd_His') . '.' . $extension;
     
         $encryptedImagePath = storage_path('app/public/') . $processedName;
         file_put_contents($encryptedImagePath, $encryptedData);
     
-        $saveImg = new Image();
-        $saveImg->uploaded_image = $originalName;
+        $saveImg = new ImageEncryption();
+        $saveImg->uploaded_image = $uploadedName;
         $saveImg->initialization_vector = Hash::make($encryptionIV);
         $saveImg->encryption_key = Hash::make($encryptionKey);
         $saveImg->processed_image = $processedName;
@@ -73,15 +73,15 @@ class ImageController extends Controller
     
         $decryptedData = openssl_decrypt($imageData, $encryptionMethod, $encryptionKey, $options, $encryptionIV);
         
-        $originalName = $image->getClientOriginalName();
         $extension = $image->getClientOriginalExtension();
+        $uploadedName = $image->getClientOriginalName();
         $processedName = 'decrypted_image_' . now()->format('Ymd_His') . '.' . $extension;
     
         $decryptedImagePath = storage_path('app/public/') . $processedName;
         file_put_contents($decryptedImagePath, $decryptedData);
     
-        $saveImg = new Image();
-        $saveImg->uploaded_image = $originalName;
+        $saveImg = new ImageDecryption();
+        $saveImg->uploaded_image = $uploadedName;
         $saveImg->initialization_vector = Hash::make($encryptionIV);
         $saveImg->encryption_key = Hash::make($encryptionKey);
         $saveImg->processed_image = $processedName;
