@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class ImageDecryption extends Model
 {
     use HasFactory;
 
-    protected $table = 'image';
+    protected $table = 'image_decryption';
 
     protected $fillable = [
         'uploaded_image',

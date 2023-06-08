@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image', function (Blueprint $table) {
+        Schema::create('image_decryption', function (Blueprint $table) {
             $table->id();
             $table->text('uploaded_image');
             $table->text('initialization_vector');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('image_decryption');
     }
 };
