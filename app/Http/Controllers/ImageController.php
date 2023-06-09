@@ -18,7 +18,7 @@ class ImageController extends Controller
         $request->validate([
             'fileUploadOriginal' => 'required|image|mimes:jpeg,png',
             'initVectorEncrypt' => 'required|size:16',
-            'encryptionKey' => 'required',
+            'secretKeyEncrypt' => 'required',
         ], [
             'initVectorEncrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
@@ -28,10 +28,10 @@ class ImageController extends Controller
         $encryptionMethod = 'AES-256-CBC';
         $options = 0;
     
-        $encryptionKey = $request->input('encryptionKey');
+        $secretKeyEncrypt = $request->input('secretKeyEncrypt');
         $encryptionIV = $request->input('initVectorEncrypt');
     
-        $encryptedData = openssl_encrypt($imageData, $encryptionMethod, $encryptionKey, $options, $encryptionIV);
+        $encryptedData = openssl_encrypt($imageData, $encryptionMethod, $secretKeyEncrypt, $options, $encryptionIV);
         
         $extension = $image->getClientOriginalExtension();
         $uploadedName = 'original_image_' . now()->format('Ymd_His') . '.' . $extension;
@@ -43,7 +43,7 @@ class ImageController extends Controller
         $saveImg = new ImageEncryption();
         $saveImg->uploaded_image = $uploadedName;
         $saveImg->initialization_vector = Hash::make($encryptionIV);
-        $saveImg->encryption_key = Hash::make($encryptionKey);
+        $saveImg->encryption_key = Hash::make($secretKeyEncrypt);
         $saveImg->processed_image = $processedName;
         $saveImg->save();
     
@@ -58,7 +58,7 @@ class ImageController extends Controller
         $request->validate([
             'fileUploadDecrypt' => 'required',
             'initVectorDecrypt' => 'required|size:16',
-            'encryptionKeyDecrypt' => 'required',
+            'secretKeyDecrypt' => 'required',
         ], [
             'initVectorDecrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
@@ -68,10 +68,10 @@ class ImageController extends Controller
         $encryptionMethod = 'AES-256-CBC';
         $options = 0;
     
-        $encryptionKey = $request->input('encryptionKeyDecrypt');
+        $secretKeyDecrypt = $request->input('secretKeyDecrypt');
         $encryptionIV = $request->input('initVectorDecrypt');
     
-        $decryptedData = openssl_decrypt($imageData, $encryptionMethod, $encryptionKey, $options, $encryptionIV);
+        $decryptedData = openssl_decrypt($imageData, $encryptionMethod, $secretKeyDecrypt, $options, $encryptionIV);
         
         $extension = $image->getClientOriginalExtension();
         $uploadedName = $image->getClientOriginalName();
@@ -83,7 +83,7 @@ class ImageController extends Controller
         $saveImg = new ImageDecryption();
         $saveImg->uploaded_image = $uploadedName;
         $saveImg->initialization_vector = Hash::make($encryptionIV);
-        $saveImg->encryption_key = Hash::make($encryptionKey);
+        $saveImg->encryption_key = Hash::make($secretKeyDecrypt);
         $saveImg->processed_image = $processedName;
         $saveImg->save();
     

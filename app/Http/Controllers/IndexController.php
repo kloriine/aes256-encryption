@@ -17,7 +17,7 @@ class IndexController extends Controller
         $request->validate([
             'plainTextEncrypt' => 'required',
             'initVectorEncrypt' => 'required|size:16',
-            'encryptionKey' => 'required',
+            'secretKeyEncrypt' => 'required',
         ], [
             'initVectorEncrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
@@ -27,20 +27,20 @@ class IndexController extends Controller
         $iv = $request->input('initVectorEncrypt');
         $options = 0;
 
-        $encryptionKey = $request->input('encryptionKey');
+        $secretKeyEncrypt = $request->input('secretKeyEncrypt');
 
-        $encryptedString = openssl_encrypt($stringToEncrypt, $method, $encryptionKey, $options, $iv);
+        $encryptedString = openssl_encrypt($stringToEncrypt, $method, $secretKeyEncrypt, $options, $iv);
 
         $encryption = new Encryption();
         $encryption->plaintext = hash('sha256', $stringToEncrypt);
         $encryption->initialization_vector = Hash::make($iv);
-        $encryption->encryption_key = Hash::make($encryptionKey);
+        $encryption->encryption_key = Hash::make($secretKeyEncrypt);
         $encryption->ciphertext = $encryptedString;
         $encryption->save();
 
         return redirect()->back()->with([
             'stringToEncrypt' => $stringToEncrypt,
-            'encryptionKey' => $encryptionKey,
+            'secretKeyEncrypt' => $secretKeyEncrypt,
             'ivEnc' => $iv,
             'encryptedString' => $encryptedString,
         ]);
@@ -50,7 +50,7 @@ class IndexController extends Controller
         $request->validate([
             'cipherTextDecrypt' => 'required',
             'initVectorDecrypt' => 'required|size:16',
-            'encryptionKeyDecrypt' => 'required',
+            'secretKeyDecrypt' => 'required',
         ], [
             'initVectorDecrypt.size' => 'The initialization vector must be exactly 16 characters.',
         ]);
@@ -60,20 +60,20 @@ class IndexController extends Controller
         $iv = $request->input('initVectorDecrypt');
         $options = 0;
 
-        $encryptionKey = $request->input('encryptionKeyDecrypt');
+        $secretKeyDecrypt = $request->input('secretKeyDecrypt');
 
-        $decryptedString = openssl_decrypt($stringToDecrypt, $method, $encryptionKey, $options, $iv);
+        $decryptedString = openssl_decrypt($stringToDecrypt, $method, $secretKeyDecrypt, $options, $iv);
         
         $decryption = new Decryption();
         $decryption->ciphertext = $stringToDecrypt;
         $decryption->initialization_vector = Hash::make($iv);
-        $decryption->encryption_key = Hash::make($encryptionKey);
+        $decryption->encryption_key = Hash::make($secretKeyDecrypt);
         $decryption->plaintext = hash('sha256', $decryptedString); 
         $decryption->save();
 
         return redirect()->back()->with([
             'stringToDecrypt' => $stringToDecrypt,
-            'encryptionKeyDec' => $encryptionKey,
+            'secretKeyDecrypt' => $secretKeyDecrypt,
             'ivDec' => $iv,
             'decryptedString' => $decryptedString,
         ]);
