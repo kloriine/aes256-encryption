@@ -16,7 +16,7 @@ class ImageController extends Controller
 
     public function encryption(Request $request) {
         $request->validate([
-            'fileUploadOriginal' => 'required|image|mimes:jpeg,png',
+            'fileUploadOriginal' => 'required|image|mimes:jpeg,png,jpg,jfif,pjp,pjpeg',
             'initVectorEncrypt' => 'required|size:16',
             'secretKeyEncrypt' => 'required',
         ], [
