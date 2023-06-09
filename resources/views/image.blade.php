@@ -62,8 +62,8 @@
                 <input type="text" name="initVectorEncrypt" id="initVectorEncrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Must be 16 characters" required>
             </div>
             <div class="mt-3">
-                <label for="encryptionKey" class="block leading-6 text-gray-900">Encryption Key</label>
-                <input type="text" name="encryptionKey" id="encryptionKey" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
+                <label for="secretKeyEncrypt" class="block leading-6 text-gray-900">Secret Key</label>
+                <input type="text" name="secretKeyEncrypt" id="secretKeyEncrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
             </div>
             <p class="text-sm pt-2">Once you click the encrypt button below, the encrypted image should be downloaded to your personal computer automatically.</p>
             <div class="mt-5 text-center">
@@ -99,8 +99,8 @@
               <input type="text" name="initVectorDecrypt" id="initVectorDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Must be 16 characters" required>
             </div>
             <div class="mt-3">
-              <label for="encryptionKeyDecrypt" class="block leading-6 text-gray-900">Encryption Key</label>
-              <input type="text" name="encryptionKeyDecrypt" id="encryptionKeyDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
+              <label for="secretKeyDecrypt" class="block leading-6 text-gray-900">Secret Key</label>
+              <input type="text" name="secretKeyDecrypt" id="secretKeyDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
             </div>
             <p class="text-sm pt-2">Once you click the decrypt button below, the decrypted image should be downloaded to your personal computer automatically.</p>
             <div class="mt-5 text-center">

@@ -64,8 +64,8 @@
               <input type="text" name="initVectorEncrypt" id="initVectorEncrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Must be 16 characters" required>
             </div>
             <div class="mt-3">
-              <label for="encryptionKey" class="block leading-6 text-gray-900">Encryption Key</label>
-              <input type="text" name="encryptionKey" id="encryptionKey" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
+              <label for="secretKeyEncrypt" class="block leading-6 text-gray-900">Secret Key</label>
+              <input type="text" name="secretKeyEncrypt" id="secretKeyEncrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
             </div>
             <div class="mt-5 text-center">
               <button name="encrypt" type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Encrypt</button>
@@ -79,14 +79,14 @@
           </form><br>
           <script>
             $(document).ready(function() {
-              var plainTextEncrypt = "{!! urldecode(session('stringToEncrypt')) !!}";
+              var plainTextEncrypt = "{!! addslashes(session('stringToEncrypt')) !!}";
               var initVectorEncrypt = "{{session('ivEnc')}}";
-              var encryptionKey = "{{session('encryptionKey')}}";
+              var secretKeyEncrypt = "{{session('secretKeyEncrypt')}}";
               var cipherTextEncrypt = "{{session('encryptedString')}}";
   
               $('#plainTextEncrypt').val(plainTextEncrypt);
               $('#initVectorEncrypt').val(initVectorEncrypt);
-              $('#encryptionKey').val(encryptionKey);
+              $('#secretKeyEncrypt').val(secretKeyEncrypt);
               $('#cipherTextEncrypt').val(cipherTextEncrypt);
             });
           </script>
@@ -121,8 +121,8 @@
               <input type="text" name="initVectorDecrypt" id="initVectorDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Must be 16 characters" required>
             </div>
             <div class="mt-3">
-              <label for="encryptionKeyDecrypt" class="block leading-6 text-gray-900">Encryption Key</label>
-              <input type="text" name="encryptionKeyDecrypt" id="encryptionKeyDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
+              <label for="secretKeyDecrypt" class="block leading-6 text-gray-900">Secret Key</label>
+              <input type="text" name="secretKeyDecrypt" id="secretKeyDecrypt" class="mt-1 p-2.5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" placeholder="Any characters" required>
             </div>
             <div class="mt-5 text-center">
               <button name="decrypt" type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Decrypt</button>
@@ -138,12 +138,12 @@
             $(document).ready(function() {
               var cipherTextDecrypt = "{{session('stringToDecrypt')}}";
               var initVectorDecrypt = "{{session('ivDec')}}";
-              var encryptionKeyDecrypt = "{{session('encryptionKeyDec')}}";
-              var plainTextDecrypt = "{!! urldecode(session('decryptedString')) !!}";
+              var secretKeyDecrypt = "{{session('secretKeyDecrypt')}}";
+              var plainTextDecrypt = "{!! addslashes(session('decryptedString')) !!}";
               
               $('#cipherTextDecrypt').val(cipherTextDecrypt);
               $('#initVectorDecrypt').val(initVectorDecrypt);
-              $('#encryptionKeyDecrypt').val(encryptionKeyDecrypt);
+              $('#secretKeyDecrypt').val(secretKeyDecrypt);
               $('#plainTextDecrypt').val(plainTextDecrypt);
             });
           </script>
