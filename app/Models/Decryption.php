@@ -12,9 +12,9 @@ class Decryption extends Model
     protected $table = 'decryption';
 
     protected $fillable = [
-        'ciphertext',
+        'uploaded_file',
         'initialization_vector',
         'encryption_key',
-        'plaintext',
+        'processed_file',
     ];
 }

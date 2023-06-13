@@ -16,9 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::post('/encrypt', [IndexController::class, 'encrypt'])->name('encrypt.store');
-Route::post('/decrypt', [IndexController::class, 'decrypt'])->name('decrypt.store');
-
-Route::get('/image', [ImageController::class, 'index'])->name('image');
-Route::post('/image/encrypt', [ImageController::class, 'encryption'])->name('image.encrypt');
-Route::post('/image/decrypt', [ImageController::class, 'decryption'])->name('image.decrypt');
+Route::post('/encrypt', [IndexController::class, 'encryption'])->name('encrypt.store');
+Route::post('/decrypt', [IndexController::class, 'decryption'])->name('decrypt.store');

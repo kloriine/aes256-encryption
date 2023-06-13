@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('decryption', function (Blueprint $table) {
             $table->id();
-            $table->text('ciphertext');
+            $table->text('uploaded_file');
             $table->text('initialization_vector');
             $table->text('encryption_key');
-            $table->text('plaintext');
+            $table->text('processed_file');
             $table->timestamps();
         });
     }
