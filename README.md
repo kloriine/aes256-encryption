@@ -1,5 +1,5 @@
 # aes256cbc-encryption
-Simple application that has the ability to encrypt or decrypt both text and image with AES-256-CBC algorithm.
+Simple application that has the ability to encrypt or decrypt all types of files with AES-256-CBC algorithm.
 
 Made with the help of [Laravel](https://laravel.com/), [jQuery](https://jquery.com/), and [Tailwind](https://tailwindcss.com/).
 
