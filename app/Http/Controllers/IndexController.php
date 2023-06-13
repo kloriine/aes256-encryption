@@ -37,8 +37,8 @@ class IndexController extends Controller
         $uploadedName = 'original_file_' . now()->format('Ymd_His') . '.' . $extension;
         $processedName = 'encrypted_file_' . now()->format('Ymd_His') . '.' . $extension;
     
-        $encryptedImagePath = storage_path('app/public/') . $processedName;
-        file_put_contents($encryptedImagePath, $encryptedData);
+        $encryptedFilePath = storage_path('app/public/') . $processedName;
+        file_put_contents($encryptedFilePath, $encryptedData);
     
         $saveFile = new Encryption();
         $saveFile->uploaded_file = $uploadedName;
@@ -47,7 +47,7 @@ class IndexController extends Controller
         $saveFile->processed_file = $processedName;
         $saveFile->save();
     
-        return Response::download($encryptedImagePath, $processedName, [
+        return Response::download($encryptedFilePath, $processedName, [
             'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
             'Pragma' => 'no-cache',
             'Expires' => '0',
@@ -77,17 +77,17 @@ class IndexController extends Controller
         $uploadedName = $file->getClientOriginalName();
         $processedName = 'decrypted_file_' . now()->format('Ymd_His') . '.' . $extension;
     
-        $decryptedImagePath = storage_path('app/public/') . $processedName;
-        file_put_contents($decryptedImagePath, $decryptedData);
+        $decryptedFilePath = storage_path('app/public/') . $processedName;
+        file_put_contents($decryptedFilePath, $decryptedData);
     
-        $saveImg = new Decryption();
-        $saveImg->uploaded_file = $uploadedName;
-        $saveImg->initialization_vector = Hash::make($encryptionIV);
-        $saveImg->encryption_key = Hash::make($secretKeyDecrypt);
-        $saveImg->processed_file = $processedName;
-        $saveImg->save();
+        $saveFile = new Decryption();
+        $saveFile->uploaded_file = $uploadedName;
+        $saveFile->initialization_vector = Hash::make($encryptionIV);
+        $saveFile->encryption_key = Hash::make($secretKeyDecrypt);
+        $saveFile->processed_file = $processedName;
+        $saveFile->save();
     
-        return Response::download($decryptedImagePath, $processedName, [
+        return Response::download($decryptedFilePath, $processedName, [
             'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
             'Pragma' => 'no-cache',
             'Expires' => '0',
